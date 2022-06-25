@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 	"webapp/src/config"
 	"webapp/src/cookies"
 	"webapp/src/modelos"
@@ -90,4 +91,54 @@ func CarregarPaginaDeAtualizacaoDePublicacao(w http.ResponseWriter, r *http.Requ
 	}
 
 	utils.ExecutarTemplate(w, "atualizar-publicacao.html", publicacao)
+}
+
+func CarregarPaginaDeUsuarios(w http.ResponseWriter, r *http.Request) {
+	nomeOuNick := strings.ToLower(r.URL.Query().Get("usuario"))
+	url := fmt.Sprintf("%s/usuarios?usuario=%s", config.ApiUrl, nomeOuNick)
+	response, err := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
+	if err != nil {
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErrorAPI{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		respostas.TratarStatusCodeDeErro(w, response)
+		return
+	}
+
+	var usuarios []modelos.Usuario
+	if err := json.NewDecoder(response.Body).Decode(&usuarios); err != nil {
+		respostas.JSON(w, http.StatusUnprocessableEntity, respostas.ErrorAPI{Error: err.Error()})
+		return
+	}
+
+	utils.ExecutarTemplate(w, "usuarios.html", usuarios)
+}
+
+func CarregarPerfildDoUsuarios(w http.ResponseWriter, r *http.Request) {
+	parametros := mux.Vars(r)
+	usuarioID, err := strconv.ParseUint(parametros["usuarioId"], 10, 64)
+	if err != nil {
+		respostas.JSON(w, http.StatusBadRequest, respostas.ErrorAPI{Error: err.Error()})
+		return
+	}
+
+	usuario, err := modelos.BuscarUsuarioCompleto(usuarioID, r)
+	if err != nil {
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErrorAPI{Error: err.Error()})
+		return
+	}
+
+	cookie, _ := cookies.Ler(r)
+	usuarioLogadoID, _ := strconv.ParseUint(cookie["id"], 10, 64)
+
+	utils.ExecutarTemplate(w, "usuario.html", struct {
+		Usuario         modelos.Usuario
+		UsuarioLogadoID uint64
+	}{
+		Usuario:         usuario,
+		UsuarioLogadoID: usuarioLogadoID,
+	})
 }
