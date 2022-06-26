@@ -11,3 +11,17 @@ services:
     environment: 
       - MYSQL_ROOT_PASSWORD=root
       - TZ=America/Sao_Paulo
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management-alpine
+    ports:
+    - 5672:5672
+    - 15672:15672
+    volumes:
+    - rabbitmq-data:/var/lib/rabbitmq/
+    - rabbitmq-log:/var/log/rabbitmq
+    environment:
+    - RABBITMQ_DEFAULT_VHOST=devbook
+volumes:
+  rabbitmq-data:
+  rabbitmq-log:
