@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strconv"
 	"webapp/src/config"
+	"webapp/src/cookies"
 	"webapp/src/requisicoes"
 	"webapp/src/respostas"
 
@@ -79,6 +80,69 @@ func SeguirUsuario(w http.ResponseWriter, r *http.Request) {
 
 	url := fmt.Sprintf("%s/usuarios/%d/seguir", config.ApiUrl, usuarioID)
 	response, err := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPost, url, nil)
+	if err != nil {
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErrorAPI{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		respostas.TratarStatusCodeDeErro(w, response)
+		return
+	}
+
+	respostas.JSON(w, response.StatusCode, nil)
+}
+
+func EditarUsuario(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	usuario, err := json.Marshal(map[string]string{
+		"nome":  r.FormValue("nome"),
+		"nick":  r.FormValue("nick"),
+		"email": r.FormValue("email"),
+	})
+	if err != nil {
+		respostas.JSON(w, http.StatusBadRequest, respostas.ErrorAPI{Error: err.Error()})
+		return
+	}
+
+	cookie, _ := cookies.Ler(r)
+	usuarioID, _ := strconv.ParseUint(cookie["id"], 10, 64)
+
+	url := fmt.Sprintf("%s/usuarios/%d", config.ApiUrl, usuarioID)
+	response, err := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPut, url, bytes.NewBuffer(usuario))
+	if err != nil {
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErrorAPI{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		respostas.TratarStatusCodeDeErro(w, response)
+		return
+	}
+
+	respostas.JSON(w, response.StatusCode, nil)
+}
+
+func AtualizarSenha(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	senhas, err := json.Marshal(map[string]string{
+		"atual": r.FormValue("atual"),
+		"nova":  r.FormValue("nova"),
+	})
+	if err != nil {
+		respostas.JSON(w, http.StatusBadRequest, respostas.ErrorAPI{Error: err.Error()})
+		return
+	}
+
+	cookie, _ := cookies.Ler(r)
+	usuarioID, _ := strconv.ParseUint(cookie["id"], 10, 64)
+
+	url := fmt.Sprintf("%s/usuarios/%d/atualizar-senha", config.ApiUrl, usuarioID)
+	response, err := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodPost, url, bytes.NewBuffer(senhas))
 	if err != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErrorAPI{Error: err.Error()})
 		return
