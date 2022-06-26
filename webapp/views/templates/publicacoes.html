@@ -1,22 +1,22 @@
 {{ define "curtidas" }}
-    <i class="fa-solid fa-heart curtir-publicacao" style="cursor: pointer;"></i>
+    <i class="fas fa-heart curtir-publicacao" style="cursor: pointer;"></i>
     <span> {{ .Curtidas }} </span>
 {{ end }}
 
 {{ define "editar" }}
     <a href="/publicacoes/{{ .ID }}/atualizar" style="text-decoration: none;">
-        <i class="fa-solid fa-pen-to-square"></i>
+        <i class="fas fa-edit"></i>
     </a>
 {{ end }}
 
 {{ define "deletar" }}
-    <i class="fa-solid fa-trash text-danger deletar-publicacao" style="cursor: pointer;"></i>
+    <i class="fas fa-trash text-danger deletar-publicacao" style="cursor: pointer;"></i>
 {{ end }}
 
 {{ define "cabecalho-publicacao" }}
-    <h1 class="display-4">{{ .Titulo }}</h1>
+    <h1 class="display-4"> {{ .Titulo }} </h1>
     <p class="lead">{{ .Conteudo }}</p>
-    <a href="/usuarios/{{ .AutorID }}"> {{.AutorNick }} - {{ .CriadoEm.Format "02/01/2006" }}</a>
+    <a href="/usuarios/{{ .AutorID }}"> {{ .AutorNick }} - {{ .CriadoEm.Format "02/01/2006" }} </a>
     <hr class="my-4">
 {{ end }}
 

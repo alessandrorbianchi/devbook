@@ -39,7 +39,7 @@ func (p Publicacoes) Buscar(usuarioID uint64) ([]modelos.Publicacao, error) {
 		`SELECT DISTINCT p.id, p.titulo, p.conteudo, p.autor_id, p.curtidas, p.criadoem, u.nick 
 			FROM publicacoes p 
 			INNER JOIN usuarios u ON u.id = p.autor_id
-			INNER JOIN seguidores s ON p.autor_id = s.usuario_id
+			LEFT JOIN seguidores s ON p.autor_id = s.usuario_id
 		WHERE u.id = ? or s.seguidor_id = ? 
 		order by 1 desc`,
 		usuarioID, usuarioID,

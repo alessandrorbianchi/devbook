@@ -41,9 +41,9 @@ function curtirPublicacao(evento) {
         elementoClicado.addClass('text-danger');
         elementoClicado.removeClass('curtir-publicacao');
 
-    }).fail(function(erro) {
+    }).fail(function() {
         Swal.fire("Ops...", "Erro ao curtir a publicação!", "error");
-    }).always(function(){
+    }).always(function() {
         elementoClicado.prop('disabled', false);
     })
 }
@@ -68,9 +68,9 @@ function descurtirPublicacao(evento) {
         elementoClicado.removeClass('text-danger');
         elementoClicado.removeClass('descurtir-publicacao');
 
-    }).fail(function(erro) {
+    }).fail(function() {
         Swal.fire("Ops...", "Erro ao descurtir a publicação!", "error");
-    }).always(function(){
+    }).always(function() {
         elementoClicado.prop('disabled', false);
     })
 }
@@ -105,12 +105,12 @@ function deletarPublicacao(evento) {
     
     Swal.fire({
         title: "Atenção!",
-        text: "Tem certeza que deseja excluir essa publicação? Essa ação é irreverssível!",
+        text: "Tem certeza que deseja excluir essa publicação? Essa ação é irreversível!",
         showCancelButton: true,
         cancelButtonText: "Cancelar",
         icon: "warning"
     }).then(function(confirmacao) {
-        if (!confirmacao.value ) return;
+        if (!confirmacao.value) return;
 
         const elementoClicado = $(evento.target);
         const publicacao = elementoClicado.closest('div');
@@ -124,7 +124,7 @@ function deletarPublicacao(evento) {
             publicacao.fadeOut("slow", function() {
                 $(this).remove();
             });
-        }).fail(function(erro) {
+        }).fail(function() {
             Swal.fire("Ops...", "Erro ao excluir a publicação!", "error");
         });
     });
