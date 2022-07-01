@@ -84,7 +84,6 @@ func BuscarPublicacao(w http.ResponseWriter, r *http.Request) {
 	parametros := mux.Vars(r)
 
 	publicacaoID, err := strconv.ParseUint(parametros["publicacaoId"], 10, 64)
-	fmt.Println(publicacaoID)
 	if err != nil {
 		respostas.Error(w, http.StatusBadRequest, err)
 		return
