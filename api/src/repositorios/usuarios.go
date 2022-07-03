@@ -142,7 +142,6 @@ func (u Usuarios) BuscarPorEmail(email string) (modelos.Usuario, error) {
 	}
 
 	return usuario, nil
-
 }
 
 func (u Usuarios) Seguir(usuarioID, seguidorID uint64) error {

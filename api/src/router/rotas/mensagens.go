@@ -7,7 +7,7 @@ import (
 
 var rotasMensagens = []Rota{
 	{
-		Uri:                "/mesangens",
+		Uri:                "/usuarios/{usuarioId}/mensagens",
 		Metodo:             http.MethodPost,
 		Funcao:             controllers.EnviarMensagem,
 		RequerAutenticacao: true,
@@ -15,7 +15,7 @@ var rotasMensagens = []Rota{
 	{
 		Uri:                "/mensagens",
 		Metodo:             http.MethodGet,
-		Funcao:             controllers.BuscarMensagens,
+		Funcao:             controllers.BuscarMensagensAgrupadasPorUsuario,
 		RequerAutenticacao: true,
 	},
 	{
@@ -24,17 +24,4 @@ var rotasMensagens = []Rota{
 		Funcao:             controllers.BuscarMensagensPorUsuario,
 		RequerAutenticacao: true,
 	},
-	// {
-	// 	Uri:                "/mensagens/{mensagemId}",
-	// 	Metodo:             http.MethodGet,
-	// 	Funcao:             controllers.BuscarMensagem,
-	// 	RequerAutenticacao: true,
-	// },
-	// {
-	// 	Uri:                "/publicacoes/{publicacaoId}",
-	// 	Metodo:             http.MethodDelete,
-	// 	Funcao:             controllers.DeletarPublicacao,
-	// 	RequerAutenticacao: true,
-	// },
-
 }

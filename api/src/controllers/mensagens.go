@@ -6,6 +6,7 @@ import (
 	"api/src/modelos"
 	"api/src/repositorios"
 	"api/src/respostas"
+	"api/src/seguranca"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
@@ -18,6 +19,13 @@ func EnviarMensagem(w http.ResponseWriter, r *http.Request) {
 	usuarioID, err := autenticacao.ExtrairUsuarioID(r)
 	if err != nil {
 		respostas.Error(w, http.StatusUnauthorized, err)
+		return
+	}
+
+	parametros := mux.Vars(r)
+	destinatarioID, err := strconv.ParseUint(parametros["usuarioId"], 10, 64)
+	if err != nil {
+		respostas.Error(w, http.StatusBadRequest, err)
 		return
 	}
 
@@ -34,6 +42,13 @@ func EnviarMensagem(w http.ResponseWriter, r *http.Request) {
 	}
 
 	mensagem.RemententeID = usuarioID
+	mensagem.DestinatarioID = destinatarioID
+	codigoDeSeguranca, err := seguranca.GerarCodigoDeSeguranca(usuarioID, destinatarioID)
+	if err != nil {
+		respostas.Error(w, http.StatusBadRequest, err)
+		return
+	}
+	mensagem.CodigoSeguranca = codigoDeSeguranca
 	if err := mensagem.Preparar(); err != nil {
 		respostas.Error(w, http.StatusBadRequest, err)
 		return
@@ -56,7 +71,7 @@ func EnviarMensagem(w http.ResponseWriter, r *http.Request) {
 	respostas.JSON(w, http.StatusCreated, mensagem)
 }
 
-func BuscarMensagens(w http.ResponseWriter, r *http.Request) {
+func BuscarMensagensAgrupadasPorUsuario(w http.ResponseWriter, r *http.Request) {
 	usuarioID, err := autenticacao.ExtrairUsuarioID(r)
 	if err != nil {
 		respostas.Error(w, http.StatusUnauthorized, err)
@@ -70,7 +85,7 @@ func BuscarMensagens(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	repositorio := repositorios.NovoRepositorioDeMensagens(db)
-	mensagens, err := repositorio.Buscar(usuarioID)
+	mensagens, err := repositorio.BuscarAgrupado(usuarioID)
 	if err != nil {
 		respostas.Error(w, http.StatusInternalServerError, err)
 		return
@@ -80,8 +95,14 @@ func BuscarMensagens(w http.ResponseWriter, r *http.Request) {
 }
 
 func BuscarMensagensPorUsuario(w http.ResponseWriter, r *http.Request) {
+	remententeID, err := autenticacao.ExtrairUsuarioID(r)
+	if err != nil {
+		respostas.Error(w, http.StatusUnauthorized, err)
+		return
+	}
+
 	parametros := mux.Vars(r)
-	usuarioID, err := strconv.ParseUint(parametros["usuarioId"], 10, 64)
+	destinatarioID, err := strconv.ParseUint(parametros["usuarioId"], 10, 64)
 	if err != nil {
 		respostas.Error(w, http.StatusBadRequest, err)
 		return
@@ -95,7 +116,7 @@ func BuscarMensagensPorUsuario(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	repositorio := repositorios.NovoRepositorioDeMensagens(db)
-	mensagens, err := repositorio.BuscarPorUsuario(usuarioID)
+	mensagens, err := repositorio.BuscarPorUsuario(remententeID, destinatarioID)
 	if err != nil {
 		respostas.Error(w, http.StatusInternalServerError, err)
 		return
@@ -103,70 +124,3 @@ func BuscarMensagensPorUsuario(w http.ResponseWriter, r *http.Request) {
 
 	respostas.JSON(w, http.StatusOK, mensagens)
 }
-
-// func BuscarMensagem(w http.ResponseWriter, r *http.Request) {
-// 	parametros := mux.Vars(r)
-
-// 	mensagemID, err := strconv.ParseUint(parametros["mensagemID"], 10, 64)
-// 	if err != nil {
-// 		respostas.Error(w, http.StatusBadRequest, err)
-// 		return
-// 	}
-
-// 	db, err := banco.Conectar()
-// 	if err != nil {
-// 		respostas.Error(w, http.StatusInternalServerError, err)
-// 		return
-// 	}
-// 	defer db.Close()
-
-// 	repositorio := repositorios.NovoRepositorioDeMensagens(db)
-// 	publicacao, err := repositorio.BuscarPorID(mensagemID)
-// 	if err != nil {
-// 		respostas.Error(w, http.StatusInternalServerError, err)
-// 		return
-// 	}
-
-// 	respostas.JSON(w, http.StatusOK, publicacao)
-// }
-
-// func DeletarPublicacao(w http.ResponseWriter, r *http.Request) {
-// 	usuarioID, err := autenticacao.ExtrairUsuarioID(r)
-// 	if err != nil {
-// 		respostas.Error(w, http.StatusUnauthorized, err)
-// 		return
-// 	}
-
-// 	parametros := mux.Vars(r)
-// 	publicacaoID, err := strconv.ParseUint(parametros["publicacaoId"], 10, 64)
-// 	if err != nil {
-// 		respostas.Error(w, http.StatusBadRequest, err)
-// 		return
-// 	}
-
-// 	db, err := banco.Conectar()
-// 	if err != nil {
-// 		respostas.Error(w, http.StatusInternalServerError, err)
-// 		return
-// 	}
-// 	defer db.Close()
-
-// 	repositorio := repositorios.NovoRepositorioDePublicacoes(db)
-// 	publicacaoSalvaNoBanco, err := repositorio.BuscarPorID(publicacaoID)
-// 	if err != nil {
-// 		respostas.Error(w, http.StatusInternalServerError, err)
-// 		return
-// 	}
-
-// 	if publicacaoSalvaNoBanco.AutorID != usuarioID {
-// 		respostas.Error(w, http.StatusForbidden, fmt.Errorf("não é possível deletar uma publicação que não é sua"))
-// 		return
-// 	}
-
-// 	if err = repositorio.Deletar(publicacaoID); err != nil {
-// 		respostas.Error(w, http.StatusInternalServerError, err)
-// 		return
-// 	}
-
-// 	respostas.JSON(w, http.StatusNoContent, nil)
-// }

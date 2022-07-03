@@ -4,8 +4,8 @@ USE devbook;
 DROP TABLE IF EXISTS publicacoes;
 DROP TABLE IF EXISTS seguidores;
 DROP TABLE IF EXISTS usuarios;
-DROP TABLE IF EXISTS mensagens_enviadas;
 DROP TABLE IF EXISTS mensagens_recebidas;
+DROP TABLE IF EXISTS mensagens_enviadas;
 
 CREATE TABLE usuarios(
     id int auto_increment primary key,
@@ -57,9 +57,10 @@ CREATE TABLE mensagens_enviadas(
     FOREIGN KEY (destinatario_id)
     REFERENCES usuarios(id)
     ON DELETE CASCADE,
+    codigo_seguranca int not null,
 
-     criadoem timestamp default current_timestamp(),
-     enviadoem timestamp
+    criadoem timestamp default current_timestamp(),
+    enviadoem timestamp
 ) ENGINE=INNODB;
 
 CREATE TABLE mensagens_recebidas(

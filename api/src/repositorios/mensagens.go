@@ -14,13 +14,13 @@ func NovoRepositorioDeMensagens(db *sql.DB) *Mensagens {
 }
 
 func (m Mensagens) Enviar(mensagem modelos.MensagemEnviada) (uint64, error) {
-	statement, err := m.db.Prepare("INSERT INTO mensagens_enviadas (mensagem, remetente_id, destinatario_id) VALUES(?, ?, ?)")
+	statement, err := m.db.Prepare("INSERT INTO mensagens_enviadas (mensagem, remetente_id, destinatario_id, codigo_seguranca) VALUES(?, ?, ?, ?)")
 	if err != nil {
 		return 0, err
 	}
 	defer statement.Close()
 
-	resultado, err := statement.Exec(mensagem.Mensagem, mensagem.RemententeID, mensagem.DestinatarioID)
+	resultado, err := statement.Exec(mensagem.Mensagem, mensagem.RemententeID, mensagem.DestinatarioID, mensagem.CodigoSeguranca)
 	if err != nil {
 		return 0, err
 	}
@@ -33,15 +33,29 @@ func (m Mensagens) Enviar(mensagem modelos.MensagemEnviada) (uint64, error) {
 	return uint64(ultimoIDInserido), nil
 }
 
-func (m Mensagens) Buscar(ID uint64) ([]modelos.MensagemEnviada, error) {
+func (m Mensagens) BuscarAgrupado(ID uint64) ([]modelos.MensagemEnviada, error) {
 	linhas, err := m.db.Query(
-		`SELECT me.id, me.mensagem, me.remetente_id, me.destinatario_id , me.criadoem, COALESCE(me.enviadoem, 'NULL')
-		 	FROM mensagens_enviadas me
-		 	LEFT JOIN mensagens_recebidas mr ON me.id = mr.mensagem_enviada_id
-		 WHERE me.remetente_id = ? or me.destinatario_id = ?
-		order by 1 desc`,
+		`SELECT 
+			MAX(me.id), 
+			me.mensagem, 
+			me.remetente_id, 
+			ur.nick, 
+			me.destinatario_id, 
+			ud.nick, 
+			me.codigo_seguranca,
+			me.criadoem, 
+			COALESCE(me.enviadoem, 'NULL'), 
+			COALESCE(mr.recebidoem, 'NULL')
+		FROM mensagens_enviadas me  
+		INNER JOIN usuarios ur ON ur.id = me.remetente_id 
+		INNER JOIN usuarios ud ON ud.id = me.destinatario_id 
+		LEFT JOIN mensagens_recebidas mr ON me.id = mr.mensagem_enviada_id 
+		WHERE me.destinatario_id = ? OR me.remetente_id  = ?
+		GROUP BY me.codigo_seguranca 
+		ORDER BY 1 DESC`,
 		ID, ID,
 	)
+
 	if err != nil {
 		return nil, err
 	}
@@ -56,9 +70,13 @@ func (m Mensagens) Buscar(ID uint64) ([]modelos.MensagemEnviada, error) {
 			&mensagem.ID,
 			&mensagem.Mensagem,
 			&mensagem.RemententeID,
+			&mensagem.RemententeNick,
 			&mensagem.DestinatarioID,
+			&mensagem.DestinatarioNick,
+			&mensagem.CodigoSeguranca,
 			&mensagem.CriadoEm,
 			&mensagem.EnviadoEm,
+			&mensagem.RecebidoEm,
 		); err != nil {
 			return nil, err
 		}
@@ -69,13 +87,18 @@ func (m Mensagens) Buscar(ID uint64) ([]modelos.MensagemEnviada, error) {
 	return mensagens, nil
 }
 
-func (m Mensagens) BuscarPorUsuario(usuarioID uint64) ([]modelos.MensagemEnviada, error) {
+func (m Mensagens) BuscarPorUsuario(remetenteID, destinatarioID uint64) ([]modelos.MensagemEnviada, error) {
 	linha, err := m.db.Query(
-		`SELECT me.id, me.mensagem, me.remetente_id, me.destinatario_id , me.criadoem, COALESCE(me.enviadoem, 'null')
-			FROM mensagens_enviadas me
-			INNER JOIN usuarios u ON u.id = me.remetente_id
-			WHERE me.remetente_id = ?`,
-		usuarioID,
+		`SELECT me.id, me.mensagem, me.remetente_id, ur.nick, me.destinatario_id, ud.nick, me.criadoem, COALESCE(me.enviadoem, 'NULL'), COALESCE(mr.recebidoem, 'NULL')
+			FROM mensagens_enviadas me  
+			INNER JOIN usuarios ur ON ur.id = me.remetente_id 
+			INNER JOIN usuarios ud ON ud.id = me.destinatario_id 
+			LEFT JOIN mensagens_recebidas mr ON me.id = mr.mensagem_enviada_id 
+		WHERE me.destinatario_id = ? and me.remetente_id  = ?
+		OR me.destinatario_id = ? and me.remetente_id  = ?
+		ORDER BY me.id DESC 
+		`,
+		destinatarioID, remetenteID, remetenteID, destinatarioID,
 	)
 	if err != nil {
 		return nil, err
@@ -91,9 +114,12 @@ func (m Mensagens) BuscarPorUsuario(usuarioID uint64) ([]modelos.MensagemEnviada
 			&mensagem.ID,
 			&mensagem.Mensagem,
 			&mensagem.RemententeID,
+			&mensagem.RemententeNick,
 			&mensagem.DestinatarioID,
+			&mensagem.DestinatarioNick,
 			&mensagem.CriadoEm,
 			&mensagem.EnviadoEm,
+			&mensagem.RecebidoEm,
 		); err != nil {
 			return nil, err
 		}
@@ -103,70 +129,3 @@ func (m Mensagens) BuscarPorUsuario(usuarioID uint64) ([]modelos.MensagemEnviada
 
 	return mensagens, nil
 }
-
-// func (m Mensagens) BuscarPorID(mensagemID uint64) (modelos.MensagemEnviada, error) {
-// 	linha, err := m.db.Query(
-// 		`SELECT me.id, me.mensagem, me.remetente_id, me.destinatario_id , me.criadoem, COALESCE(me.enviadoem, 'null')
-// 		 	FROM mensagens_enviadas me
-// 		 	LEFT JOIN usuarios u ON u.id = me.remetente_id
-// 		 WHERE me.remetente_id = ?`,
-// 		mensagemID,
-// 	)
-// 	if err != nil {
-// 		return modelos.MensagemEnviada{}, err
-// 	}
-// 	defer linha.Close()
-
-// 	var mensagem modelos.MensagemEnviada
-
-// 	if linha.Next() {
-// 		if err = linha.Scan(
-// 			&mensagem.ID,
-// 			&mensagem.Mensagem,
-// 			&mensagem.RemententeID,
-// 			&mensagem.DestinatarioID,
-// 			&mensagem.CriadoEm,
-// 			&mensagem.EnviadoEm,
-// 		); err != nil {
-// 			return modelos.MensagemEnviada{}, err
-// 		}
-// 	}
-
-// 	return mensagem, nil
-// }
-
-// func (p Publicacoes) Deletar(publicacaoID uint64) error {
-// 	statement, err := p.db.Prepare("DELETE FROM publicacoes WHERE id = ?")
-
-// 	if err != nil {
-// 		return err
-// 	}
-// 	defer statement.Close()
-
-// 	if _, err = statement.Exec(publicacaoID); err != nil {
-// 		return err
-// 	}
-
-// 	return nil
-// }
-
-// func (p Publicacoes) Descurtir(publicacaoID uint64) error {
-// 	statement, err := p.db.Prepare(
-// 		`UPDATE publicacoes SET curtidas =
-// 			CASE
-// 				WHEN curtidas > 0 THEN curtidas - 1
-// 				ELSE 0
-// 			END
-// 			WHERE id = ?`,
-// 	)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	defer statement.Close()
-
-// 	if _, err = statement.Exec(publicacaoID); err != nil {
-// 		return err
-// 	}
-
-// 	return nil
-// }
