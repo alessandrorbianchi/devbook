@@ -1,0 +1,34 @@
+{{ define "criado" }}
+    <i class="fa-solid fa-check"></i>
+{{ end }}
+
+{{ define "enviado" }}
+    <i class="fa-solid fa-check-double"></i>
+{{ end }}
+
+{{ define "recebido" }}
+    <i class="fa-solid fa-check-double text-success"></i>
+{{ end }}
+
+{{ define "deletar-mensagem" }}
+    <i class="fa-solid fa-x deletar-mensagem" style="cursor: pointer;"></i>
+{{ end }}
+
+{{ define "cabecalho-mensagem" }}
+    <h1 class="display-8"> {{ .DestinatarioNick }} </h1>
+    <p class="lead">{{ .Mensagem }} - {{ .CriadoEm.Format "02/01/2006" }}</p>
+    <a href="/usuarios/{{ .DestinatarioID }}"> {{ .RemententeNick }}  </a>
+{{ end }}
+
+{{ define "mensagem" }}
+    <div class="jumbotron" data-publicacao-id="{{ .ID }}">
+        {{ template "cabecalho-mensagem" . }}
+        <p>
+            <!-- {{ template "criado" . }}
+            {{ template "enviado" . }}
+            {{ template "recebido" . }} -->
+            <!-- {{ template "deletar-mensagem" . }} -->
+        </p>
+    </div>
+{{ end }}
+

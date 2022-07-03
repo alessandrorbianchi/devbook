@@ -1,0 +1,33 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevBook - Minhas Mensagens</title>
+    <link href="/assets/css/bootstrap.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="#">
+</head>
+
+<body>
+ 
+    {{ template "cabecalho" }}
+
+    <div class="container-fluid">
+        <div class="row mt-4">
+            <div class="col-12">
+                <h3>Minhas Mensagens</h3>
+                {{ range .Mensagens }}
+                    {{ template "mensagem" . }}
+                {{ end }}
+            </div>
+        </div>
+    </div>
+
+    {{ template "rodape" }}
+
+    {{ template "scripts" }}
+
+    <script src="/assets/js/publicacoes.js"></script>
+</body>
+
+</html>

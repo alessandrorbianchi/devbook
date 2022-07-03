@@ -51,8 +51,6 @@ func CarregarPaginaPrincipal(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Printf("publicacoes: %v", publicacoes)
-
 	cookie, _ := cookies.Ler(r)
 	usuarioID, _ := strconv.ParseUint(cookie["id"], 10, 64)
 
@@ -181,4 +179,77 @@ func CarregarPaginaDeEdicaoDeUsuario(w http.ResponseWriter, r *http.Request) {
 
 func CarregarPaginaDeAtualizacaoDeSenha(w http.ResponseWriter, r *http.Request) {
 	utils.ExecutarTemplate(w, "atualizar-senha.html", nil)
+}
+
+func CarregarPaginaDeMensagensDoUsuario(w http.ResponseWriter, r *http.Request) {
+	url := fmt.Sprintf("%s/mensagens", config.ApiUrl)
+	response, err := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
+	if err != nil {
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErrorAPI{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		respostas.TratarStatusCodeDeErro(w, response)
+		return
+	}
+
+	var mensagens []modelos.Mensagem
+	if err = json.NewDecoder(response.Body).Decode(&mensagens); err != nil {
+		respostas.JSON(w, http.StatusUnprocessableEntity, respostas.ErrorAPI{Error: err.Error()})
+		return
+	}
+
+	cookie, _ := cookies.Ler(r)
+	usuarioID, _ := strconv.ParseUint(cookie["id"], 10, 64)
+
+	utils.ExecutarTemplate(w, "mensagem-usuario.html", struct {
+		Mensagens []modelos.Mensagem
+		UsuarioID uint64
+	}{
+		Mensagens: mensagens,
+		UsuarioID: usuarioID,
+	})
+}
+
+func CarregarPaginaDeMensagensDoSeguidor(w http.ResponseWriter, r *http.Request) {
+	parametros := mux.Vars(r)
+	usuarioID, err := strconv.ParseUint(parametros["usuarioId"], 10, 64)
+	if err != nil {
+		respostas.JSON(w, http.StatusBadRequest, respostas.ErrorAPI{Error: err.Error()})
+		return
+	}
+
+	url := fmt.Sprintf("%s/usuarios/%d/mensagens", config.ApiUrl, usuarioID)
+	response, err := requisicoes.FazerRequisicaoComAutenticacao(r, http.MethodGet, url, nil)
+	if err != nil {
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErrorAPI{Error: err.Error()})
+		return
+	}
+	defer response.Body.Close()
+
+	if response.StatusCode >= 400 {
+		respostas.TratarStatusCodeDeErro(w, response)
+		return
+	}
+
+	var mensagens []modelos.Mensagem
+	if err = json.NewDecoder(response.Body).Decode(&mensagens); err != nil {
+		respostas.JSON(w, http.StatusUnprocessableEntity, respostas.ErrorAPI{Error: err.Error()})
+		return
+	}
+
+	cookie, _ := cookies.Ler(r)
+	usuarioLogadoID, _ := strconv.ParseUint(cookie["id"], 10, 64)
+
+	utils.ExecutarTemplate(w, "mensagem-seguidor.html", struct {
+		Mensagens       []modelos.Mensagem
+		UsuarioID       uint64
+		UsuarioLogadoID uint64
+	}{
+		Mensagens:       mensagens,
+		UsuarioID:       usuarioID,
+		UsuarioLogadoID: usuarioLogadoID,
+	})
 }

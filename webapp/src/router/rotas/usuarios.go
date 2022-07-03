@@ -78,4 +78,16 @@ var rotasUsuarios = []Rota{
 		Funcao:             controllers.DeletarUsuario,
 		RequerAutenticacao: true,
 	},
+	{
+		Uri:                "/mensagem-usuario",
+		Metodo:             http.MethodGet,
+		Funcao:             controllers.CarregarPaginaDeMensagensDoUsuario,
+		RequerAutenticacao: true,
+	},
+	{
+		Uri:                "/mensagem-seguidor/{usuarioId}",
+		Metodo:             http.MethodGet,
+		Funcao:             controllers.CarregarPaginaDeMensagensDoSeguidor,
+		RequerAutenticacao: true,
+	},
 }
