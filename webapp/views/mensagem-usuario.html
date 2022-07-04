@@ -15,10 +15,16 @@
     <div class="container-fluid">
         <div class="row mt-4">
             <div class="col-12">
-                <h3>Minhas Mensagens</h3>
-                {{ range .Mensagens }}
-                    {{ template "mensagem" . }}
-                {{ end }}
+                <h3>Mensagens</h3>
+                <div class="list-group">                
+                    {{ range .Mensagens }}
+                        {{ if (eq .RemetenteID $.UsuarioLogadoID) }}
+                            {{ template "mensagem-destinatario-usuario" . }}
+                        {{ else }}
+                            {{ template "mensagem-remetente-usuario" . }}
+                        {{ end }}
+                    {{ end }}
+                </div>
             </div>
         </div>
     </div>
@@ -27,7 +33,6 @@
 
     {{ template "scripts" }}
 
-    <script src="/assets/js/publicacoes.js"></script>
 </body>
 
 </html>

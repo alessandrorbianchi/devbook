@@ -202,14 +202,14 @@ func CarregarPaginaDeMensagensDoUsuario(w http.ResponseWriter, r *http.Request) 
 	}
 
 	cookie, _ := cookies.Ler(r)
-	usuarioID, _ := strconv.ParseUint(cookie["id"], 10, 64)
+	usuarioLogadoID, _ := strconv.ParseUint(cookie["id"], 10, 64)
 
 	utils.ExecutarTemplate(w, "mensagem-usuario.html", struct {
-		Mensagens []modelos.Mensagem
-		UsuarioID uint64
+		Mensagens       []modelos.Mensagem
+		UsuarioLogadoID uint64
 	}{
-		Mensagens: mensagens,
-		UsuarioID: usuarioID,
+		Mensagens:       mensagens,
+		UsuarioLogadoID: usuarioLogadoID,
 	})
 }
 

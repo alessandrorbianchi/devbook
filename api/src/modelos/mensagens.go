@@ -8,14 +8,14 @@ import (
 type MensagemEnviada struct {
 	ID               uint64 `json:"id,omitempty"`
 	Mensagem         string `json:"mensagem,omitempty"`
-	RemententeID     uint64 `json:"rementente_id,omitempty"`
-	RemententeNick   string `json:"remetente_nick,omitempty"`
+	RemetenteID      uint64 `json:"remetente_id,omitempty"`
+	RemetenteNick    string `json:"remetente_nick,omitempty"`
 	DestinatarioID   uint64 `json:"destinatario_id,omitempty"`
 	DestinatarioNick string `json:"destinatario_nick,omitempty"`
 	CodigoSeguranca  uint64 `json:"codigo_seguranca,omitempty"`
 	CriadoEm         string `json:"criadoem,omitempty"`
 	EnviadoEm        string `json:"enviadoem,omitempty"`
-	RecebidoEm       string `json:"recebido_em,omitempty"`
+	RecebidoEm       string `json:"recebidoem,omitempty"`
 }
 
 func (m *MensagemEnviada) Preparar() error {

@@ -31,9 +31,15 @@
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 col-xl-7">
-                {{ range .Mensagens }}
-                    {{ template "mensagem" . }}
-                {{ end }}
+                <div class="list-group">                
+                    {{ range .Mensagens }}
+                        {{ if (eq .RemetenteID $.UsuarioLogadoID) }}
+                            {{ template "mensagem-remetente" . }}
+                        {{ else }}
+                            {{ template "mensagem-destinatario" . }}
+                        {{ end }}
+                    {{ end }}
+                </div>
             </div>
         </div>
     </div>

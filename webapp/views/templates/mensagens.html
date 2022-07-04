@@ -14,21 +14,58 @@
     <i class="fa-solid fa-x deletar-mensagem" style="cursor: pointer;"></i>
 {{ end }}
 
-{{ define "cabecalho-mensagem" }}
-    <h1 class="display-8"> {{ .DestinatarioNick }} </h1>
-    <p class="lead">{{ .Mensagem }} - {{ .CriadoEm.Format "02/01/2006" }}</p>
-    <a href="/usuarios/{{ .DestinatarioID }}"> {{ .RemententeNick }}  </a>
-{{ end }}
-
-{{ define "mensagem" }}
-    <div class="jumbotron" data-publicacao-id="{{ .ID }}">
-        {{ template "cabecalho-mensagem" . }}
-        <p>
-            <!-- {{ template "criado" . }}
-            {{ template "enviado" . }}
-            {{ template "recebido" . }} -->
-            <!-- {{ template "deletar-mensagem" . }} -->
+{{ define "mensagem-remetente" }}
+    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start list-group-item-primary">
+        <p class="mb-1"> 
+            <i>{{ .Mensagem }}</i>
+            <small> 
+                {{ .CriadoEm.Format "02/01/2006 04:05:06" }} {{ template "check" . }} 
+            </small>  
         </p>
-    </div>
+    </a>
 {{ end }}
 
+{{ define "mensagem-destinatario" }}
+    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+        <p class="mb-1">
+            <i>{{ .Mensagem }}</i>
+            <small class="text-muted">
+                {{ .CriadoEm.Format "02/01/2006" }} 
+            </small>
+        </p>
+    </a>
+{{ end }}
+
+{{ define "check" }}
+    {{ if (eq .EnviadoEm "NULL") }}
+        {{ template "criado" }}    
+    {{ else if (eq .RecebidoEm "NULL") }}
+        {{ template "enviado" }}
+    {{ else }}        
+        {{ template "recebido" }}
+    {{ end}}
+{{ end }}
+
+{{ define "mensagem-remetente-usuario" }}
+    <a href="/mensagem-seguidor/{{ .RemetenteID }}" class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ .RemetenteNick }}</h5>
+            <small> {{ .CriadoEm.Format "02/01/2006" }} </small>  
+        </div>
+        <p class="mb-1"> 
+            <i>{{ .Mensagem }}</i>
+        </p>
+    </a>
+{{ end }}
+
+{{ define "mensagem-destinatario-usuario" }}
+    <a href="/mensagem-seguidor/{{ .DestinatarioID }}" class="list-group-item list-group-item-action flex-column align-items-center">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ .DestinatarioNick }}</h5>
+            <small> {{ .CriadoEm.Format "02/01/2006" }} </small>  
+        </div>
+        <p class="mb-1">
+            <i>{{ .Mensagem }}</i>
+        </p>
+    </a>
+{{ end }}

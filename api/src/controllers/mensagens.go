@@ -41,7 +41,7 @@ func EnviarMensagem(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	mensagem.RemententeID = usuarioID
+	mensagem.RemetenteID = usuarioID
 	mensagem.DestinatarioID = destinatarioID
 	codigoDeSeguranca, err := seguranca.GerarCodigoDeSeguranca(usuarioID, destinatarioID)
 	if err != nil {

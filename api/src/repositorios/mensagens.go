@@ -20,7 +20,7 @@ func (m Mensagens) Enviar(mensagem modelos.MensagemEnviada) (uint64, error) {
 	}
 	defer statement.Close()
 
-	resultado, err := statement.Exec(mensagem.Mensagem, mensagem.RemententeID, mensagem.DestinatarioID, mensagem.CodigoSeguranca)
+	resultado, err := statement.Exec(mensagem.Mensagem, mensagem.RemetenteID, mensagem.DestinatarioID, mensagem.CodigoSeguranca)
 	if err != nil {
 		return 0, err
 	}
@@ -69,8 +69,8 @@ func (m Mensagens) BuscarAgrupado(ID uint64) ([]modelos.MensagemEnviada, error) 
 		if err = linhas.Scan(
 			&mensagem.ID,
 			&mensagem.Mensagem,
-			&mensagem.RemententeID,
-			&mensagem.RemententeNick,
+			&mensagem.RemetenteID,
+			&mensagem.RemetenteNick,
 			&mensagem.DestinatarioID,
 			&mensagem.DestinatarioNick,
 			&mensagem.CodigoSeguranca,
@@ -96,6 +96,7 @@ func (m Mensagens) BuscarPorUsuario(remetenteID, destinatarioID uint64) ([]model
 			LEFT JOIN mensagens_recebidas mr ON me.id = mr.mensagem_enviada_id 
 		WHERE me.destinatario_id = ? and me.remetente_id  = ?
 		OR me.destinatario_id = ? and me.remetente_id  = ?
+		AND mr.recebidoem IS NOT NULL
 		ORDER BY me.id DESC 
 		`,
 		destinatarioID, remetenteID, remetenteID, destinatarioID,
@@ -113,8 +114,8 @@ func (m Mensagens) BuscarPorUsuario(remetenteID, destinatarioID uint64) ([]model
 		if err = linha.Scan(
 			&mensagem.ID,
 			&mensagem.Mensagem,
-			&mensagem.RemententeID,
-			&mensagem.RemententeNick,
+			&mensagem.RemetenteID,
+			&mensagem.RemetenteNick,
 			&mensagem.DestinatarioID,
 			&mensagem.DestinatarioNick,
 			&mensagem.CriadoEm,
