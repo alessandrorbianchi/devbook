@@ -1,17 +1,38 @@
-insert into usuarios (nome, nick, email, senha)
-values 
-('usuario 1', 'usu01', 'usuario01@gmail.com', '$2a$10$cBOrv3ZSLwTLYGUHCHvBZ.zXeYJLIuAACrM/sayxExwQ45So0yKH2'),
-('usuario 2', 'usu02', 'usuario02@gmail.com', '$2a$10$cBOrv3ZSLwTLYGUHCHvBZ.zXeYJLIuAACrM/sayxExwQ45So0yKH2'),
-('usuario 3', 'usu03', 'usuario03@gmail.com', '$2a$10$cBOrv3ZSLwTLYGUHCHvBZ.zXeYJLIuAACrM/sayxExwQ45So0yKH2'),
-('usuario 4', 'usu04', 'usuario04@gmail.com', '$2a$10$cBOrv3ZSLwTLYGUHCHvBZ.zXeYJLIuAACrM/sayxExwQ45So0yKH2'),
-('usuario 5', 'usu05', 'usuario05@gmail.com', '$2a$10$cBOrv3ZSLwTLYGUHCHvBZ.zXeYJLIuAACrM/sayxExwQ45So0yKH2'),
-('usuario 6', 'usu06', 'usuario06@gmail.com', '$2a$10$cBOrv3ZSLwTLYGUHCHvBZ.zXeYJLIuAACrM/sayxExwQ45So0yKH2'),
-('usuario 7', 'usu07', 'usuario07@gmail.com', '$2a$10$cBOrv3ZSLwTLYGUHCHvBZ.zXeYJLIuAACrM/sayxExwQ45So0yKH2'),
-('usuario 8', 'usu08', 'usuario08@gmail.com', '$2a$10$cBOrv3ZSLwTLYGUHCHvBZ.zXeYJLIuAACrM/sayxExwQ45So0yKH2');
+INSERT INTO usuarios (nome, nick, email, senha)
+VALUES
+('Carolina Elza da Silva', 'Carolina Silva', 'carolina.elza.dasilva@its.jnj.com', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Maya Yasmin Maria Gonçalves', 'Maya Gonçalves', 'maya_yasmin_goncalves@alliancarh.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Catarina Caroline da Mata', 'Catarina da Mata', 'catarina_caroline_damata@solucao.adm.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Priscila Mirella Moraes', 'Priscila Moraes', 'priscila-moraes78@supercleanlav.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Rafael Vitor Murilo Martins', 'Rafael Martins', 'rafael_martins@rcstechnology.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Augusto Leonardo Ribeiro', 'Augusto Ribeiro', 'augusto-ribeiro90@maptec.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Raimundo Carlos Eduardo Pires', 'Raimundo Pires',	'raimundo_carlos_pires@crsilvadesign.com', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Danilo Vitor Gael Viana', 'Danilo Viana', 'danilo_vitor_viana@iacit.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Gael Caio da Cunha', 'Gael Cunha', 'gael_dacunha@heinrich.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Marcelo Jorge Pereira', 'Marcelo Pereira', 'marcelo_pereira@mmarques.com', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Nathan Marcos Almeida', 'Nathan Almeida', 'nathan_almeida@destaco.com', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Luan Levi Barbosa', 'Luan Barbosa', 'luan.levi.barbosa@itelefonica.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Melissa Rayssa Jennifer Nascimento', 'Melissa Nascimento', 'melissa-nascimento82@negleribeiro.com', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Giovanna Sabrina Carla Aparício', 'Giovanna Aparício', 'giovannasabrinaaparicio@wredenborg.se', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Giovana Aurora Figueiredo', 'Giovana Figueiredo', 'giovana-figueiredo74@oticascarol.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Caio Tiago Lopes', 'Caio Lopes', 'caio-lopes76@gustavoscoelho.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Anderson Luís Benedito das Neves', 'Anderson das Neves', 'anderson_luis_dasneves@raya3.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Luiz Enrico Nunes', 'Luiz Nunes', 'luiz_nunes@stetnet.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Bryan Julio Monteiro', 'Bryan Monteiro', 'bryanjuliomonteiro@betti.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Caleb Diogo Castro', 'Caleb Castro', 'caleb_castro@carlosalbertoleite.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Antonella Giovana Sales', 'Antonella Sales', 'antonella.giovana.sales@freitasepozzatti.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Bernardo Bryan Gabriel Dias', 'Bernardo Dias', 'bernardo_dias@compecia.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Heloise Fernanda Mariane Galvão', 'Heloise Galvão', 'heloise_fernanda_galvao@3dmaker.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Alessandra Clara Heloisa Assunção', 'Alessandra Assunção', 'alessandra_assuncao@eptv.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Lavínia Emily Novaes', 'Lavínia Novaes', 'lavinia.emily.novaes@dkcarmo.com', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Rosângela Lívia Sônia Barros', 'Rosângela Barros', 'rosangelaliviabarros@vmetaiscba.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Vera Amanda Vieira', 'Vera Vieira', 'vera_vieira@megapremiumvip.com', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Ruan Thomas Ferreira', 'Ruan Ferreira', 'ruan_ferreira@ctfmgacc.org.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Lara Caroline de Paula', 'Lara de Paula', 'lara-depaula99@solutionimoveis.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS'),
+('Enzo Noah Pietro Carvalho', 'Enzo Carvalho',	'enzo.noah.carvalho@agen-pegeuot.com.br', '$2a$10$p7jSDYAFtRIV5Jl6tx33kuod6Xj.xDfauBNpynYRicHRor8aa/PnS');
 
-
-insert into seguidores (usuario_id, seguidor_id)
-values 
+INSERT INTO seguidores (usuario_id, seguidor_id)
+VALUES
 (1,2),
 (1,3),
 (2,1),
@@ -21,8 +42,70 @@ values
 (6,7),
 (5,6);
 
-insert into publicacoes (titulo, conteudo, autor_id)
-values
-("Publicação de usuário 1", "Essa é a publicação do usuário 1! Oba!", 1),
-("Publicação de usuário 2", "Essa é a publicação do usuário 2! Oba!", 2),
-("Publicação de usuário 3", "Essa é a publicação do usuário 3! Oba!", 3);
+INSERT INTO publicacoes (titulo, conteudo, autor_id)
+VALUES
+('Compadre Ipsum', 'Se você deseja uma boa dose de bom humor na hora de adicionar o texto às suas criações, vale a pena contar com os bordões do popular Compadre Washington, integrante do grupo dos anos 90 “É o Tchan!”. Os textos gerados por esse “Lorem Ipsum” imitam o jeito de falar de Washington.', '1'),
+('Samuel L. Ipsum', 'Essa versão do Lorem Ipsum utiliza os personagens do ator estadunidense Samuel L. Jackson. O vocabulário, todo em inglês, possui boas doses de humor e, como não poderia faltar, muito sarcasmo.', '1'),
+('Hipster Ipsum', 'Essa versão hipster do Lorem Ipsum traz todos os elementos da cultura mais “moderninha” da atualidade, também em inglês. Vale a pena utilizá-lo para homenagear aquele amigo que detesta qualquer coisa considerada “mainstream”.', '1'),
+('DeLorean Ipsum', 'Os fãs de “De volta para o futuro” podem contar com um Lorem Ipsum exclusivo para si. Com as falas do personagem principal McFly (Michael J. Fox) e, além dele, Doc Brown (Christopher Lloyd), somente grandes entusiastas da saga irão entender o que as palavras querem realmente dizer.', '2'),
+('Mussum Ipsum', 'É claro que o grande Mussum, saudoso integrante de “Os Trapalhões”, não poderia faltaar nessa lista inusitada de versões do Lorem Ipsum. O Mussum Ipsum é um dos mais hilarios da lista e conta com frases como “Mussum Ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis.”', '3'),
+('Cheese Ipsum', 'Os fãs de queijo já podem contar com um Lorem Ipsum para chamar de seu, com palavras que remetem a esse delicioso ingrediente.', '2'),
+('Beer Ipsum', 'Querendo convidar os colegas para aquele happy hour depois do expediente? Se você é designer, pode fazer isso de maneira divertida com a versão cervejeira do Lorem Ipsum. O texto é composto por palavras que só verdadeiros fãs de cerveja compreenderiam.', '3'),
+('Bacon Ipsum', 'Os amantes de um bom bacon também não precisam ficar de fora dessa lista. O Bacon Ipsum é uma maneira divertida de demonstrar seu amor por esse item tão importante na dieta de muitos.', '4'),
+('Veggie Ipsum', 'Veganos, não fiquem de fora! Se você deseja defender seu estilo de vida em prol dos animais de maneira divertida, é possível utilizar essa versão do Lorem Ipsum para fazê-lo com estilo.', '5'),
+('Pokém Ipsum', 'Os nomes dos mascotes de Pokémon, inusitados como são, também não poderiam ficar de fora da lista de versões inusitadas do Lorem Ipsum. Afinal de contas, Bulbasaur realmente se parece com uma palavra de uma língua antiga, não é mesmo?', '5'),
+('Cat Ipsum', 'Amantes de gatos, essa é para vocês! O Lorem Ipsum oficial dos felinos conta com elementos que fazem referência ao comportamento diário de muitos deles, todos em inglês.', '5'),
+('HodorIpsum', 'O personagem de Game of Thrones também conta com sua própria versão do Lorem Ipsum, que é inteiramente composto de uma única palavra: Hodor.', '4'),
+('Cupcake Ipsum', 'Que tal um Lorem Ipsum cheio de um alimento que muitas pessoas amam? O Cupcake Ipsum, além de encher o seu layout, dá vontade de encher a barriga de deliciosos bolinhos.', '4'),
+('Fileratti', 'Se você deseja mostrar o quanto conhece de literatura em seus projetos, esse Lorem Ipsum é todo seu, uma vez que é composto por trechos de clássicos do romance.', '7'),
+('Zombie Ipsum', 'Essa versão do Lorem Ipsum contém referências aos zumbis, personagens assustadores de filmes e séries famosas de televisão.', '8'),
+('Web 2.0 Ipsum', 'Com nomes de startups reais do ramo da tecnologia, esse Lorem Ipsum é ideal para empreendedores e inovadores.', '9'),
+('Lorizzle', 'O Lorizzle dá um toque "gangsta" para os seus layouts, com uma série de gírias e frases bem engraçadas.', '9'),
+('Fillerama', 'A popular série em desenho estadunidense, conhecida em português como Futurama, tem um Lorem Ipsum todo dedicado a ela, com as polêmicas e engraçadas frases ditas por seus personagens.', '8');
+
+
+INSERT INTO devbook.mensagens_enviadas (mensagem, remetente_id, destinatario_id, codigo_seguranca) 
+VALUES
+('Boa tarde, senhorita, o que posso fazer por você?', 1, 2, 12),
+('Boa tarde, você pode me dizer que tem um hambúrguer comum?', 2, 1, 12),
+('É claro que tem 200gr de carne, queijo cheddar, bacon, fatias de tomate e molhos.', 1, 2, 12),
+('Excelente. Eu quero um, acompanhado por um refrigerante.', 2, 1, 12),
+('Ok. Daqui a pouco enviarei seu pedido.', 1, 2, 12),
+('Muito obrigado.', 2, 1, 12),
+('Olá Vera, como tem passado?', 5, 27, 527),
+('muito bem! você, como está?', 27, 5, 527),
+('Tudo bem. Passei muito tempo sem falar com você.', 5, 27, 527),
+('É verdade, eu estava viajando, conheci vários países da Ásia no ano passado.', 27, 5, 527),
+('Isso parece muito interessante! Você trouxe memórias?', 5, 27, 527),
+('Sim, eu trouxe um chaveiro de cada país que visitei.', 27, 5, 527),
+('Oi Marcelo, você sabe a que horas o jogo começa hoje?', 8, 10, 810),
+('Olá! Começa às cinco e meia.', 10, 8, 810),
+('Então vou sair uma hora antes para chegar a tempo.', 8, 10, 810),
+('Ok, até mais.', 10, 8, 810),
+('Olá!', 13, 16, 1316),
+('Oi, eu sou Caio, como foi?', 16, 13, 1316),
+('Olá Caio, muito bem, e você?', 13, 16, 1316),
+('Muito bom. Alessandra está em casa? Não atende o telefone.', 16, 13, 1316),
+('Ela foi ao mercado e deixou o telefone aqui. Quando eu voltar, eu direi para você ligar.', 13, 16, 1316),
+('Muito obrigado, até mais tarde.', 16, 13, 1316),
+('Não tem problema, você está muito bem.', 13, 16, 1316),
+('Oi Augusto!', 7, 6, 67),
+('Oi Raimundo! Como vai?', 6, 7, 67),
+('Há uma semana comecei a trabalhar aqui perto. Estou a caminho de casa.', 7, 6, 67),
+('Você está longe de casa. onde esta trabalhando?', 6, 7, 67),
+('Em uma clínica a alguns quarteirões daqui.', 7, 6, 67),
+('Bem, eu também trabalho por aqui, então agora vamos nos ver com mais frequência. Vamos tomar uma bebida e conversar.', 6, 7, 67),
+('Excelente ideia, a uma quadra de distância é um bar com bons preços.', 7, 6, 67),
+('Tudo bem, vamos continuar conversando.', 6, 7, 67),
+('Gostaria de se juntar a mim hoje?', 17, 21, 1721),
+('por que? Aonde vamos?', 21, 17, 1721),
+('Para o seu lugar favorito, o shopping.', 17, 21, 1721),
+('Isso parece ótimo! Vamos comprar meu presente de aniversário com antecedência?', 21, 17, 1721),
+('Não exatamente.', 17, 21, 1721),
+('meu presente de Natal?', 21, 17, 1721),
+('acho melhor eu ir sozinho.', 17, 21, 1721),
+('Professor, quero falar com você.', 12, 19, 1219),
+('Diga-me, o que você precisa?', 19, 12, 1219),
+('Estou tendo problemas para entender os algoritmos, o que explicava a última aula de matemática.', 12, 19, 1219),
+('Isso é provavelmente porque você se distrai na sala de aula. Analisaremos juntos, pois você deve se preparar para o exame.', 19, 12, 1219),
+('Muito obrigado, professor.', 12, 19, 1219);

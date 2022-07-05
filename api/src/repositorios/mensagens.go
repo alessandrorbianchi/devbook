@@ -36,13 +36,13 @@ func (m Mensagens) Enviar(mensagem modelos.MensagemEnviada) (uint64, error) {
 func (m Mensagens) BuscarAgrupado(ID uint64) ([]modelos.MensagemEnviada, error) {
 	linhas, err := m.db.Query(
 		`SELECT 
-			MAX(me.id), 
+			me.id, 
 			me.mensagem, 
 			me.remetente_id, 
 			ur.nick, 
 			me.destinatario_id, 
 			ud.nick, 
-			me.codigo_seguranca,
+			me.codigo_seguranca, 
 			me.criadoem, 
 			COALESCE(me.enviadoem, 'NULL'), 
 			COALESCE(mr.recebidoem, 'NULL')
@@ -50,9 +50,14 @@ func (m Mensagens) BuscarAgrupado(ID uint64) ([]modelos.MensagemEnviada, error) 
 		INNER JOIN usuarios ur ON ur.id = me.remetente_id 
 		INNER JOIN usuarios ud ON ud.id = me.destinatario_id 
 		LEFT JOIN mensagens_recebidas mr ON me.id = mr.mensagem_enviada_id 
-		WHERE me.destinatario_id = ? OR me.remetente_id  = ?
-		GROUP BY me.codigo_seguranca 
-		ORDER BY 1 DESC`,
+		WHERE me.id = (
+			SELECT 
+				MAX(me2.id) 
+			FROM mensagens_enviadas me2
+			WHERE 
+				me2.destinatario_id = ? 
+				OR me2.remetente_id  = ? 
+			)`,
 		ID, ID,
 	)
 
